@@ -397,7 +397,7 @@ body.lib-open{overflow:hidden}
   </div>
   <div class="controls">
     <button id="prevBtn" class="ctl" type="button" aria-label="Restart phase, or go to previous phase"></button>
-    <button id="minusBtn" class="ctl" type="button" aria-label="30 seconds less">&minus;30</button>
+    <button id="minusBtn" class="ctl" type="button" aria-label="30 seconds less">−30</button>
     <button id="playBtn" class="ctl main" type="button" aria-label="Pause"></button>
     <button id="plusBtn" class="ctl" type="button" aria-label="30 seconds more">+30</button>
     <button id="nextBtn" class="ctl" type="button" aria-label="Next phase"></button>
@@ -426,14 +426,14 @@ const PALETTE=[
   {bg:'#44536B',fg:'#FFFFFF'}
 ];
 const INK={bg:'#1D1B33',fg:'#FFFFFF'};
-const STORE_KEY='practice-blocks-v1';
+const STORE_KEY='practice-blocks-v2';
 const DEFAULTS={sessionMin:25,block:2,getReady:5,headsUp:10,countdown:true,voice:true,halfway:false,volume:0.8,breakMin:5,voiceName:'',rate:1,speakNote:false};
 
 const $=id=>document.getElementById(id);
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
 const clampDur=s=>Math.min(5940,Math.max(5,Math.round(s)));
 const colorOf=p=>(p&&PALETTE[p.color])||PALETTE[0];
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
 const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function fmt(sec){
@@ -473,40 +473,20 @@ const ICON={
 function P(name,min,note,color){ return {id:uid(),name:name,dur:Math.round(min*60),note:note||'',color:color||0}; }
 function seedRoutines(){
   return [
-    {id:uid(),name:'Bachata solo 25',phases:[
-      P('Warm-up: joint circles',2,'Neck, shoulders, ribcage, hips, knees, ankles. Small and easy.',7),
-      P('Basic step on the beat',2,'Side basic with the tap on 4 and 8. Soft knees, full weight transfer.',1),
-      P('Chest isolations',2,'Side to side, then front and back. Hips stay quiet.',0),
-      P('Hip isolations',2,'Side to side and figure eights. Let the knee bend drive the hips.',2),
-      P('Shoulders and head',2,'Shoulder isolations, then head slides. Ribcage stays still.',3),
-      P('Body rolls and waves',2,'Top down, then bottom up. Slow before fast.',5),
-      P('Footwork: basic variations',2,'Side, forward and back, box. Clean weight changes.',4),
-      P('Footwork: syncopations',2,'Add one syncopation at a time on top of the basic.',6),
-      P('Turns and spotting',2,'Single turns in both directions. Pick a spot on the wall.',1),
-      P('Arm styling',2,'Arms over the basic. Finish every line.',0),
-      P('Combine to music',2,'Chain two or three things you drilled today.',3),
-      P('Freestyle to music',2,'Keep moving through mistakes.',2),
-      P('Cool down',1,'Easy stretching, slow breathing.',7)
-    ]},
-    {id:uid(),name:'Isolations deep dive 25',phases:[
-      P('Warm-up: joint circles',2,'Neck, shoulders, ribcage, hips, knees, ankles.',7),
-      P('Chest: slow, with counts',3,'Count 1 to 8 out loud. Exaggerate first, then refine.',0),
-      P('Chest: to music',2,'Same movement, now on the music.',0),
-      P('Hips: slow, with counts',3,'Figure eights at half speed. Check the mirror.',2),
-      P('Hips: to music',2,'',2),
-      P('Body rolls: slow, with counts',3,'One body part at a time.',5),
-      P('Body rolls: to music',2,'',5),
-      P('Combine isolations',3,'Chest into hips into a body roll, on the basic.',3),
-      P('Freestyle to music',3,'',1),
-      P('Cool down',2,'',7)
-    ]},
-    {id:uid(),name:'Quick 10',phases:[
-      P('Warm-up',1,'',7),
-      P('Basic step on the beat',2,'',1),
-      P('Chest isolations',2,'',0),
-      P('Hip isolations',2,'',2),
-      P('Freestyle to music',2,'',3),
-      P('Cool down',1,'',7)
+    {id:'m5rwalr5q47',name:"Main 26' Routine",phases:[
+      P('Hip Swings',2,'',0),
+      P('Calf Raises with Hip',2,'',1),
+      P('Side Waves',2,'',2),
+      P('Front Waves',2,'',3),
+      P('Chest forward/back',2,'',4),
+      P('Chest rotation',2,'',5),
+      P('Chest side',2,'',6),
+      P('Fast hip swings',2,'',7),
+      P('Sensual basic',2,'',0),
+      P('Shimmey',2,'',1),
+      P('Rondé',2,'',2),
+      P('Turns & Spotting',2,'',3),
+      P('Madrid Step',2,'',0)
     ]}
   ];
 }
@@ -1442,7 +1422,9 @@ function renderLib(){
   let h='';
   if(libEditing){
     h+='<div class="lib-add"><label for="libPaste">Add drills, one per line. Put a cue after a | if you like.</label>'
-      +'<textarea id="libPaste" placeholder="Basic central&#10;Hip isolations | knees drive the hips&#10;Chest isolations"></textarea>'
+      +'<textarea id="libPaste" placeholder="Basic central
+Hip isolations | knees drive the hips
+Chest isolations"></textarea>'
       +'<div class="btn-row"><input id="libPasteGroup" list="groupList" value="My drills" aria-label="Group for new drills" autocomplete="off"><button id="libPasteAdd" class="btn" type="button">Add to library</button><button id="libFromRoutine" class="btn ghost" type="button">Add drills from this routine</button></div></div>';
   } else if(libMode==='new'){
     h+='<button type="button" class="lib-blank" id="libBlank">Start with blank blocks instead</button>';
