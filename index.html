@@ -397,7 +397,7 @@ body.lib-open{overflow:hidden}
   </div>
   <div class="controls">
     <button id="prevBtn" class="ctl" type="button" aria-label="Restart phase, or go to previous phase"></button>
-    <button id="minusBtn" class="ctl" type="button" aria-label="30 seconds less">−30</button>
+    <button id="minusBtn" class="ctl" type="button" aria-label="30 seconds less">&minus;30</button>
     <button id="playBtn" class="ctl main" type="button" aria-label="Pause"></button>
     <button id="plusBtn" class="ctl" type="button" aria-label="30 seconds more">+30</button>
     <button id="nextBtn" class="ctl" type="button" aria-label="Next phase"></button>
@@ -433,7 +433,7 @@ const $=id=>document.getElementById(id);
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
 const clampDur=s=>Math.min(5940,Math.max(5,Math.round(s)));
 const colorOf=p=>(p&&PALETTE[p.color])||PALETTE[0];
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function fmt(sec){
@@ -685,10 +685,10 @@ function voiceScore(v){
   if(/enhanced/i.test(n)) s+=40;
   if(/^google/i.test(n)) s+=35;
   if(/online/i.test(n)) s+=8;
-  if(/^(samantha|daniel|karen|moira|tessa|serena|alex|ava|allison|susan|tom|kate|oliver)\b/i.test(n)) s+=15;
+  if(/^(samantha|daniel|karen|moira|tessa|serena|alex|ava|allison|susan|tom|kate|oliver) /i.test(n)) s+=15;
   if(/espeak|eloquence|compact/i.test(n)) s-=60;
   if(/desktop/i.test(n)) s-=12;
-  if(/^(albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|sandy|flo|eddy|reed)\b/i.test(n)) s-=90;
+  if(/^(albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|sandy|flo|eddy|reed) /i.test(n)) s-=90;
   return s;
 }
 function refreshVoices(){
@@ -1422,9 +1422,7 @@ function renderLib(){
   let h='';
   if(libEditing){
     h+='<div class="lib-add"><label for="libPaste">Add drills, one per line. Put a cue after a | if you like.</label>'
-      +'<textarea id="libPaste" placeholder="Basic central
-Hip isolations | knees drive the hips
-Chest isolations"></textarea>'
+      +'<textarea id="libPaste" placeholder="Basic central&#10;Hip isolations | knees drive the hips&#10;Chest isolations"></textarea>'
       +'<div class="btn-row"><input id="libPasteGroup" list="groupList" value="My drills" aria-label="Group for new drills" autocomplete="off"><button id="libPasteAdd" class="btn" type="button">Add to library</button><button id="libFromRoutine" class="btn ghost" type="button">Add drills from this routine</button></div></div>';
   } else if(libMode==='new'){
     h+='<button type="button" class="lib-blank" id="libBlank">Start with blank blocks instead</button>';
